@@ -18,6 +18,7 @@ function initializeApp() {
     setupFormValidation();
     setupParallaxEffect();
     setupTypingEffect();
+    setupSidebarAutoHide();
     
     // Mostrar hero section por defecto
     showSection('hero');
@@ -566,6 +567,41 @@ $(window).on('scroll', function() {
         $('.scroll-to-top').fadeOut(300);
     }
 });
+
+// Función para auto-hide sidebar en scroll
+function setupSidebarAutoHide() {
+    let lastScrollTop = 0;
+    let scrollTimeout;
+    
+    $(window).on('scroll', function() {
+        const scrollTop = $(window).scrollTop();
+        const sidebar = $('.sidebar');
+        
+        clearTimeout(scrollTimeout);
+        
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+            // Scrolling down - ocultar sidebar
+            sidebar.addClass('hidden');
+        } else {
+            // Scrolling up - mostrar sidebar
+            sidebar.removeClass('hidden');
+        }
+        
+        // Auto-hide después de 2 segundos sin scroll
+        scrollTimeout = setTimeout(() => {
+            if (scrollTop > 100) {
+                sidebar.addClass('hidden');
+            }
+        }, 2000);
+        
+        lastScrollTop = scrollTop;
+    });
+    
+    // Mostrar al hover en desktop
+    $('.sidebar').on('mouseenter', function() {
+        $(this).removeClass('hidden');
+    });
+}
 
 /* 14. MANEJO DE ERRORES */
 

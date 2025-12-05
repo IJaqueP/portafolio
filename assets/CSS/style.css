@@ -339,6 +339,7 @@ body::after {
     background: linear-gradient(45deg, var(--primary-gold), var(--accent-gold));
     opacity: 0.08;
     filter: blur(3px);
+    will-change: transform;
 }
 
 .wave-1 {
@@ -601,6 +602,21 @@ body::after {
 }
 
 /* BARRA LATERAL DE REDES SOCIALES */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background: rgba(26, 26, 31, 0.95);
+    z-index: 999;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sidebar.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
 
 .social-sidebar {
     position: fixed;
@@ -1422,6 +1438,19 @@ section {
 
 /* Mobile Landscape */
 @media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        top: 0;
+        left: 0;
+        padding: var(--space-md);
+        transform: translateY(0);
+    }
+
+    .sidebar.hidden {
+        transform: translateY(-100%);
+    }
+
     .social-sidebar {
         position: fixed;
         bottom: var(--space-xl);
